@@ -1,0 +1,57 @@
+<html>
+	<head>
+	<title>StartCOIN QRCode Generator</title>
+
+	<!-- qrencode.js -->
+	<script src="js/qrencodejs/qrencode.js"></script>
+
+	<!-- Generate QRCode -->
+	<script>
+		var createQRCode = function(address, amount, label, message) {
+			// clear old QR
+			document.getElementById("qrcode-request").innerHTML = "";
+
+			// craft string to encode in QR
+			var qrstr = "startcoin:" + address;
+			var argc = 0;
+
+			if (amount) {
+				if (argc == 0)
+					qrstr += "?"
+				else 
+					qrstr += "&";
+				qrstr += ("amount=" + amount);
+				argc++;
+			}
+
+			if (label)  {
+				if (argc == 0)
+					qrstr += "?"
+				else 
+					qrstr += "&";
+				qrstr += ("label=" + encodeURIComponent(label));
+				argc++;
+			}
+
+			if (message) {
+				if (argc == 0)
+					qrstr += "?"
+				else 
+					qrstr += "&";
+				qrstr += ("message=" + encodeURIComponent(message));
+				argc++;
+			}
+
+			// create the new QR
+			new QRCode(document.getElementById("qrcode-request"), qrstr);
+		}
+	</script>
+	<!-- End of Generate QRCode -->
+
+	</head>
+	<body onLoad="createQRCode('sSHKfyUUMzNtAF5kBFNSYHUC2xg3RG7Dgv', 15.0123, 'Luke', 'Payment for item #42')">
+		<div>
+			<div id="qrcode-request" class="qrcode"></div>
+		</div>
+	</body>
+</html>
